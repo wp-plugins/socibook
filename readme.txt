@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: eriksef
 Donate link: http://blog.phpwelt.net/58-social-bookmark-wordpress-plugin.html
-Tags: social bookmark bookmarking bookmarks
+Tags: social bookmark, bookmarking, bookmarks, post
 Requires at least: 2.0.0
 Tested up to: 2.5
 Stable tag: 0.8
