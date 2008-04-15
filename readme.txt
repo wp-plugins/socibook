@@ -6,7 +6,7 @@ Requires at least: 2.0.0
 Tested up to: 2.5
 Stable tag: 0.8
 
-Adding social bookmarking links to your blog
+Adding social bookmarking links to your blog!
 
 == Description ==
 You can use your own iconset.
