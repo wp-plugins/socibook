@@ -130,8 +130,7 @@ add_action('admin_menu',  'phpweltsozial_admin_menu');
 
 
 function phpweltsozial_getopt($name){
-	global $options_initialized;
-	if($options_initialized==0) {
+	if(get_option($name)===false) {
 		add_option('phpweltbookmarkservices',	"technorati.com icio.us mister-wong.de digg.com google yahoo yigg.de",	'PHPWelt.net Bookmark Services',	'yes');
 		add_option('phpweltopenas',	"2",	'PHPWelt.net Bookmark Services2',	'yes');
 		add_option('phpwelticonset',	"",	'PHPWelt.net Bookmark Services3',	'yes');

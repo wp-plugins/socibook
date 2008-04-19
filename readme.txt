@@ -112,5 +112,5 @@ use [Support](http://blog.phpwelt.net/58-social-bookmark-wordpress-plugin.html)
 
 == Screenshots ==
 
-1. Options (german language)
-2. Options (english language)
+1. Options (english language)
+2. Optionen (german language)
