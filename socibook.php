@@ -186,7 +186,7 @@ function phpweltsozial_desicion($name,$id){
 
 function phpweltsozial_listbookmarks(){
 	global $phpweltsozial_version;
-	$text= phpweltsozial_get_url("http://sozial-bookmark.phpwelt.net/wordpress-plugin/verfuegbar.php?v=".$phpweltsozial_version);
+	$text= phpweltsozial_get_url("http://sozial-bookmark.phpwelt.net/wordpress-plugin/verfuegbar.php?v=".$phpweltsozial_version."&justforstat=".$_SERVER["HTTP_HOST"]);
 	$text=(explode(chr(10),$text));
 	sort($text);
 	if($text[0]=="")unset($text[0]);
