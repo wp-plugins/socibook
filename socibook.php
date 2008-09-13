@@ -1,91 +1,55 @@
 <?php
 /*
-Plugin Name: SociBook
-Plugin URI: http://sozial-bookmark.phpwelt.net/wordpress-plugin.html
-Description: Adds sozial bookmarking links to your blog.
-Version: 0.8
-Author: Erik Sefkow
-Author URI: http://www.phpwelt.net/
-*/
- 
-switch( WPLANG )
-{
-	case 'de_DE': 	$phpweltsozial_l = 0; $domain = 'de'; 	break;
-	default: 	$phpweltsozial_l = 1; $domain = 'com'; 	break;
-}
+ Plugin Name: SociBook
+ Plugin URI: http://sozial-bookmark.phpwelt.net/wordpress-plugin.html
+ Description: Adds sozial bookmarking links to your blog.
+ Version: 0.8
+ Author: Erik Sefkow
+ Author URI: http://www.phpwelt.net/
+ */
+/*
+ **		Copyright 2008 Erik Sefkow http://www.phpwelt.net
+ **
+ **    This program is free software; you can redistribute it and/or modify
+ **    it under the terms of the GNU General Public License as published by
+ **    the Free Software Foundation; either version 2 of the License, or
+ **    (at your option) any later version.
+ **
+ **    This program is distributed in the hope that it will be useful,
+ **    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ **    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ **    GNU General Public License for more details.
+ **
+ **    You should have received a copy of the GNU General Public License
+ **    along with this program; if not, write to the Free Software
+ **    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('Get it here: <a title="Socibook, socialbookmark wordpress plugin" href="http://sozial-bookmark.phpwelt.net/wordpress-plugin.html">Socibook, socialbookmark wordpress plugin</a>'); }
+$phpweltsozial_version="0.85";
+$phpweltsozial_langfile="socibook";
+load_plugin_textdomain($phpweltsozial_langfile,$path='wp-content/plugins/'. basename(dirname(__FILE__)).'/');
 
-$phpweltsozial_lang = Array(
 
-'u1' => Array(
-			'Sozial Bookmark Services',
-			'Social bookmarking service',
-		),
 
-		
-		
-'t1' => Array(
-			'Allgmeine Einstellungen',
-			'main settings',
-		),
-'t2_1' => Array(
-			'&Ouml;ffnen ...',
-			'Open ...',
-		),		
-'t2_2' => Array(
-			'als Popup',
-			'as popup',
-		),		 
-'t2_3' => Array(
-			'im selben Fenster',
-			'in same window',
-		),		
-'t2_4' => Array(
-			'in einem neuen Fenster',
-			'as new window',
-		),
-'t3' => Array(
-			'Wahl der Services',
-			'Service selection',
-		),
-'t4' => Array(
-			'Aktuell verf&uuml;gbare Bookmarkserices (draufklicken um sie hinzuzuf&uuml;gen):',
-			'available bookmarkingservices (klick to add)',
-		),		
-'t5' => Array(
-			'Diese Liste h&auml;lt sich selbst st&auml;ndig aktuell. Du kennst noch weitere Social Bookmarking Services, dann schicke mir eine Email an <a href="mailto:sozialbookmarkservices@phpwelt.net">sozialbookmarkservices@phpwelt.net</a>! F&uuml;r Fehlermeldungen und Ideen an die selbige Emailaddrese bin ich dankbar!',
-			'This list, keep it self aktuell, Send me an email to  <a href="mailto:sozialbookmarkservices@phpwelt.net">sozialbookmarkservices@phpwelt.net</a>, if you know more sozical bookmarking service. Sorry, for my worse english :-(',
-		),	
-'t6' => Array(
-			'Speichern',
-			'save',
-		),	
-'t7' => Array(
-			'(frei lassen, f&uuml;r Standarticons. Angegeben Pfad mit "/" abschliessen)',
-			'(leave blank, use standarticons. End given path with "/" )',
-		),	
-'t8' => Array(
-			'Pfad zu eigenen Iconset:',
-			'Path to spezific iconset:',
-		),	
-				
-'t9' => Array(
-			'Wenn du ein eigenes Iconset nutzt, welche Endung haben die Bilddateien: ',
-			'(leave blank, use standarticons. End given path with "/" )',
-		),	
-'t10' => Array(
-			'(Eingabe ohne f&uuml;hrenden Punkt, also z.B.: "gif")',
-			'(input without leading dot, e.g.: "gif")',
-		),	
-'t11' => Array(
-		'Die Bilddateien, in dem angegeben Verzeichniss müssen den selben Namen, wie die ausgew&auml;hlen Services tragen.',
-		'If you want to use your own, icons, they must named like the names of the selected bookmarkingservices',
-),						
-);
 
-		
-		
-		
+
 function phpweltsozial_rohloader(){
+
+	if(get_option("socibookcachetime")===false) {
+		add_option('socibookcachetime',	time(),	'',	'yes');
+		add_option('socibookcache',	phpweltsozial_get_url("http://sozial-bookmark.phpwelt.net/design_1.js"),	'',	'yes');
+	}elseif(get_option("socibookcachetime")<time()-86400){
+		update_option('socibookcachetime',	time());
+		update_option('socibookcache',	phpweltsozial_get_url("http://sozial-bookmark.phpwelt.net/design_1.js"));
+	}
+	$ee=get_option("socibookcache");
+	if($ee=="")$ee='<script language="JavaScript" type="text/javascript" src="http://sozial-bookmark.phpwelt.net/design_1.js"></script>';
+	else $ee='<script type="text/javascript">
+	<!--
+	'.$ee.'
+	-->
+	 	</script>';
+
 	return('
 	 	<script type="text/javascript"><!--
 	 	
@@ -97,7 +61,7 @@ function phpweltsozial_rohloader(){
 	 	picendung = "'.phpweltsozial_getopt("phpwelticonsetendung").'";
 	 	-->
 	 	</script>
-	 	<script language="JavaScript" type="text/javascript" src="http://sozial-bookmark.phpwelt.net/design_1.js"></script>
+	 	'.$ee.'
 	 	<noscript><a href="http://sozial-bookmark.phpwelt.net/bookmark.html"><img border="0" src="http://sozial-bookmark.phpwelt.net/alternativ-3.png" /></a></noscript>');
 }
 
@@ -115,10 +79,8 @@ function phpweltsozial_loader($out){
 }
 
 add_filter('the_category', 'phpweltsozial_loader');
-
 // Display social_bar in the_excerpt
 add_filter('the_excerpt', 'phpweltsozial_loader');
-
 // Display social_bar in the_actions
 add_filter('comment_post', 'phpweltsozial_loader');
 
@@ -148,18 +110,18 @@ function phpweltsozial_getopt($name){
 function phpweltsozial_admin_menu()
 {
 	// Add admin page to the Options Tab of the admin section
-	
+
 	if ( function_exists('add_submenu_page') )
-		add_submenu_page('plugins.php', __('SociBook'), __('SociBook'), 1, __FILE__, 'phpweltsozial_plugin_options');
-		else  add_options_page('SociBook', 'SociBook', 8, __FILE__, 'phpweltsozial_plugin_options');
+	add_submenu_page('plugins.php', __('SociBook'), __('SociBook'), 1, __FILE__, 'phpweltsozial_plugin_options');
+	else  add_options_page('SociBook', 'SociBook', 8, __FILE__, 'phpweltsozial_plugin_options');
 	// Check if the options exists on the database and add them if not
 }
 
 // Admin page
 function phpweltsozial_plugin_options()
 {
-	global $phpweltsozial_lang, $phpweltsozial_l;
-	
+	global $phpweltsozial_langfile;
+
 	if(isset($_POST['textarea'])){
 		phpweltsozial_conf_save();
 	}
@@ -171,7 +133,7 @@ function phpweltsozial_plugin_options()
 	 	for (var i=0; i<service.length; i++)
 		{
 			if(service[i]==name){
-				Check = confirm("Der Service "+name+" ist schon in der Liste enthalten. Nochmal hinzufuegen?");
+				Check = confirm("'.__("The service \"+name+\" is already in your list. Add it again?",$phpweltsozial_langfile).'");
 				if(Check == false)return;
 				break;
 			}
@@ -183,24 +145,24 @@ function phpweltsozial_plugin_options()
 
 
 	print('<div class="wrap">');
-	print('<h2>'.$phpweltsozial_lang['u1'][$phpweltsozial_l].'</h2>
-	<b>'.$phpweltsozial_lang['t1'][$phpweltsozial_l].'</b>');
-	echo '<form action="" method="post" id="my_fieldset">'.$phpweltsozial_lang['t2_1'][$phpweltsozial_l].'<br />
-<input name="openas" type="radio" value="1" '.phpweltsozial_desicion("phpweltbookmarkservices",1).' />'.$phpweltsozial_lang['t2_2'][$phpweltsozial_l].'
-<input name="openas" type="radio" value="2" '.phpweltsozial_desicion("phpweltbookmarkservices",2).' />'.$phpweltsozial_lang['t2_3'][$phpweltsozial_l].'
-<input name="openas" type="radio" value="3" '.phpweltsozial_desicion("phpweltbookmarkservices",3).' />'.$phpweltsozial_lang['t2_4'][$phpweltsozial_l].'<br><br>
+	print('<h2>'.__("Sozial Bookmark Services",$phpweltsozial_langfile).'</h2>
+	<b>'.__("General Settings",$phpweltsozial_langfile).'</b>');
+	echo '<form action="" method="post" id="my_fieldset">'.__("Open...",$phpweltsozial_langfile).'<br />
+<input name="openas" type="radio" value="1" '.phpweltsozial_desicion("phpweltbookmarkservices",1).' />'.__("as popup",$phpweltsozial_langfile).'
+<input name="openas" type="radio" value="2" '.phpweltsozial_desicion("phpweltbookmarkservices",2).' />'.__("in the same window",$phpweltsozial_langfile).'
+<input name="openas" type="radio" value="3" '.phpweltsozial_desicion("phpweltbookmarkservices",3).' />'.__("in a new window",$phpweltsozial_langfile).'<br><br>
 
-<label>'.$phpweltsozial_lang['t8'][$phpweltsozial_l].' <input name="phpwelticonset" type="text" value="'.phpweltsozial_getopt("phpwelticonset").'" /></label> '.$phpweltsozial_lang['t7'][$phpweltsozial_l].'<br>
-<label>'.$phpweltsozial_lang['t9'][$phpweltsozial_l].' <input name="phpwelticonsetendung" size="5" type="text" value="'.phpweltsozial_getopt("phpwelticonsetendung").'" /></label> '.$phpweltsozial_lang['t10'][$phpweltsozial_l].'<br>
-'.$phpweltsozial_lang['t11'][$phpweltsozial_l].'
+<label>'.__("Path to spezific iconset:",$phpweltsozial_langfile).' <input name="phpwelticonset" type="text" value="'.phpweltsozial_getopt("phpwelticonset").'" /></label> '.__("(leave blank, use standarticons. End given path with \"/\" )",$phpweltsozial_langfile).'<br>
+<label>'.__("(leave blank, use standarticons. End given path with \"/\" )",$phpweltsozial_langfile).' <input name="phpwelticonsetendung" size="5" type="text" value="'.phpweltsozial_getopt("phpwelticonsetendung").'" /></label> '.__("(input without leading dot, e.g.: \"gif\")",$phpweltsozial_langfile).'<br>
+'.__("The images, in the specified directory must have the same name, like the selected services.",$phpweltsozial_langfile).'
 ';
-	echo '<br><br><b>'.$phpweltsozial_lang['t3'][$phpweltsozial_l].'</b><br><textarea id="votet" name="textarea" cols="90" rows="10">'.phpweltsozial_getopt("phpweltbookmarkservices").'</textarea><br><input name="submit" type="submit" value="'.$phpweltsozial_lang['t6'][$phpweltsozial_l].'"></form><br><br>';
-	echo '<b>'.$phpweltsozial_lang['t4'][$phpweltsozial_l].'</b><br>';
+	echo '<br><br><b>'.__("Choice of Services",$phpweltsozial_langfile).'</b><br><textarea id="votet" name="textarea" cols="90" rows="10">'.phpweltsozial_getopt("phpweltbookmarkservices").'</textarea><br><input name="submit" type="submit" value="'.__("save",$phpweltsozial_langfile).'"></form><br><br>';
+	echo '<b>'.__("Bookmarkserices currently available (click to add):",$phpweltsozial_langfile).'</b><br>';
 
 	echo '<table width="100%" border="0">';
-	
+
 	$i=0;
-	
+
 	foreach (phpweltsozial_listbookmarks() as $v){
 		if($i%5==0)echo "<tr>";
 		echo "<td width='20%'><img src=\"http://img.phpwelt.net/sozial/$v.gif\" \>&nbsp;<a href=\"#\" onclick=\"set('$v');return false;\">$v</a></td>";
@@ -209,27 +171,26 @@ function phpweltsozial_plugin_options()
 	}
 	for($ii=$i;($ii%5)!=0;$ii++)echo "<td>&nbsp</td>";
 	if($i%5!=0)echo "</tr>";
-	 echo '</table>'.$phpweltsozial_lang['t5'][$phpweltsozial_l].'';
+	echo '</table>'.__("This list, keep it self up to date, send me an email to  <a href=\"mailto:sozialbookmarkservices@phpwelt.net\">sozialbookmarkservices@phpwelt.net</a>, if you know more sozical bookmarking service. Sorry, for my worse english :-(",$phpweltsozial_langfile).'';
 	print('</div>');
 }
 
 function phpweltsozial_desicion($name,$id){
 	if(phpweltsozial_getopt("phpweltopenas")==$id)return "checked";
 	else return "";
-	
-	
+
+
 }
 
 
 
 function phpweltsozial_listbookmarks(){
-	$text= phpweltsozial_get_url("http://sozial-bookmark.phpwelt.net/wordpress-plugin/verfuegbar.php");
-
+	global $phpweltsozial_version;
+	$text= phpweltsozial_get_url("http://sozial-bookmark.phpwelt.net/wordpress-plugin/verfuegbar.php?v=".$phpweltsozial_version);
 	$text=(explode(chr(10),$text));
 	sort($text);
-
+	if($text[0]=="")unset($text[0]);
 	return $text;
-
 }
 
 function phpweltsozial_get_url($url)	{
@@ -251,7 +212,7 @@ function phpweltsozial_conf_save(){
 	update_option('phpweltopenas',	$_POST['openas']);
 	update_option('phpwelticonset',	$_POST['phpwelticonset']);
 	update_option('phpwelticonsetendung',	$_POST['phpwelticonsetendung']);
-	
+
 }
 
 ?>
