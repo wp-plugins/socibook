@@ -212,6 +212,7 @@ function phpweltsozial_conf_save(){
 	update_option('phpweltopenas',	$_POST['openas']);
 	update_option('phpwelticonset',	$_POST['phpwelticonset']);
 	update_option('phpwelticonsetendung',	$_POST['phpwelticonsetendung']);
+	update_option('socibookcachetime',	1);
 
 }
 
