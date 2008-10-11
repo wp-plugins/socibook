@@ -11,6 +11,8 @@ Adding social bookmarking links to your blog!
 == Description ==
 You can definine what and in what order you want to show spezific bookmarking Services. You can use your own iconset.
 German and english Language supported.
+
+Polish translation (soon) by: Tomek Slominski
 ---
 Du kannst entscheiden welche und in welcher Reihenfolge Social Bookmarks Services angezeigt werden. Du kannst auch eigene Iconsets, einbinden.
 
