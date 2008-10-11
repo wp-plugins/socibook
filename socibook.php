@@ -3,7 +3,7 @@
  Plugin Name: SociBook
  Plugin URI: http://sozial-bookmark.phpwelt.net/wordpress-plugin.html
  Description: Adds sozial bookmarking links to your blog.
- Version: 0.8
+ Version: 0.85
  Author: Erik Sefkow
  Author URI: http://www.phpwelt.net/
  */
@@ -195,9 +195,8 @@ function phpweltsozial_listbookmarks(){
 
 function phpweltsozial_get_url($url)	{
 
-	if (function_exists('file_get_contents')) {
-		$file = file_get_contents($url);
-	} else {
+	if (function_exists('file_get_contents')) $file = @file_get_contents($url);
+	if($file==""){
 		$curl = curl_init($url);
 		curl_setopt($curl, CURLOPT_HEADER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
