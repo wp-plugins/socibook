@@ -4,15 +4,20 @@ Donate link: http://blog.phpwelt.net/58-social-bookmark-wordpress-plugin.html
 Tags: social bookmark, bookmarking, bookmarks, Post, google, links, plugin, Sphere, jeqq, Wists, Smarking, Connotea, BlinkBits, blogmarks, popcurrent, Squidoo, fark, RawSugar, linkagogo, Wink, NewsVine, simpy, kaboodle, stumbleupon, Segnalo, dropjack, fleck, Diigo, plugin, Netvouz, Spurl, tagglede, Backflip, mister wong, sk*rt, Diggita, linkarena, Ask, Bookmark.it, Comments, feed me links, Blinklist, yahoo, netscape, yigg, Furl, Bloglines, Tailrank, windows live, Stumble, google, mixx, Hugg, technorati, dotnetkicks, Facebook, Digg, slashdot it, blogmemes, bluedot, dzone, Reddit, del.icio.us, network, friendsite, Rojo, bumpzee, social, indianpad, shoutwire, bookmark, obsocialbookmarker, rec6, linkk, domelhor, eucurti, kudos, Taggly, wirefan, thisnext, webride, wykop, Gabbr, i89, Linkatopia
 Requires at least: 2.0.0
 Tested up to: 2.5
-Stable tag: 0.8
+Stable tag: 0.85
 
 Adding social bookmarking links to your blog! 
 
 == Description ==
 You can definine what and in what order you want to show spezific bookmarking Services. You can use your own iconset.
-German and english Language supported.
 
-Polish translation (soon) by: Tomek Slominski
+
+Translations by:
+
+Polish: Tomek Slominski
+
+German: Erik Sefkow
+
 ---
 Du kannst entscheiden welche und in welcher Reihenfolge Social Bookmarks Services angezeigt werden. Du kannst auch eigene Iconsets, einbinden.
 
